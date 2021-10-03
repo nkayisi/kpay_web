@@ -1,0 +1,39 @@
+{% extends 'client/layouts/_base.html' %}
+
+
+{% block ntitle %}| Accueil{% endblock ntitle %}
+
+
+
+{% block ncontent %}
+
+
+{% include 'client/layouts/_nav.html' %}
+
+
+<div class="px-4 py-5 my-5 text-center">
+
+    <div class="p-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="currentColor" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+        <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z"/>
+        <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"/>
+      </svg>
+    </div>
+
+    {% comment %} <img class="d-block mx-auto mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> {% endcomment %}
+    <h1 class="display-5 fw-bold">Facile à utiliser</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a type="button" class="btn list-group-item-info menu rounded-pill btn-lg px-4 gap-3">
+          Faire une démande
+        </a>
+        <a type="button" class="btn list-group-item-secondary menu rounded-pill btn-lg px-4">
+          Mon portefeuille
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock ncontent %}

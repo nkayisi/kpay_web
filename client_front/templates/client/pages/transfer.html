@@ -1,0 +1,82 @@
+{% extends 'client/layouts/_base.html' %}
+
+
+{% block ntitle %}| Transfert{% endblock ntitle %}
+
+
+
+{% block ncontent %}
+
+{% include 'client/layouts/_nav.html' %}
+
+
+
+
+    <div class="row mx-0 ps-5">
+
+        <div class="col-md-2 main-menu">
+            <ul class="list-group p-0">
+            <li class="list-group-item list-group-item-info" aria-current="true">Types des transactions</li>
+                {% if request.user.client %}
+                <li class="list-group-item p-0 menu">
+                    <a class="dropdown-item p-3" href="{% url 'send' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                            <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                        </svg>
+                        Envoie
+                    </a>
+                </li>
+                {% endif %}
+                <li class="list-group-item p-0 menu">
+                    <a class="dropdown-item p-3" href="{% url 'withdraw' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
+                            <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                            <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
+                          </svg>
+                        Retrait
+                    </a>
+                </li>
+                <li class="list-group-item p-0 menu">
+                    <a class="dropdown-item p-3" href="{% url 'bill' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
+                            <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
+                        </svg>
+                        Payer une facture
+                    </a>
+                </li>
+
+                {% if request.user.shop_assistant %}
+                <li class="list-group-item p-0 menu">
+                    <a class="dropdown-item p-3" href="{% url 'bill-submit' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
+                            <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
+                        </svg>
+                        Soumettre facture
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="col-md-10">
+
+            {% block ntranscontent %}
+            
+            <div class=" pt-5 mt-5 text-end me-5" style="color: #cdcdcd;">
+                <h1 class="display-5 fw-bold mt-5 pt-5">
+                    Retirer au près d'un agent ou envoyer l'argent</br>  à vos proches, payer vos factures 
+                    </br> en toute sécurité
+                </h1>
+            </div>
+            
+            {% endblock ntranscontent %}
+
+        </div>
+
+        
+    </div>
+
+
+
+{% endblock ncontent %}

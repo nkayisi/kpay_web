@@ -1,0 +1,59 @@
+
+    <nav class="navbar sticky-top navbar-light list-group-item-info">
+    <div class="container">
+
+        <div class="logo">
+            {% if request.user.admin %}
+                <h2><a class="navbar-brand">Admin : {{ request.user.phone }}</a></h2>
+            {% elif request.user.agent %}
+                <h2><a class="navbar-brand">Agent : {{ request.user.phone }}</a></h2>
+            {% elif request.user.client %}
+                <h2><a class="navbar-brand">Abonné : {{ request.user.phone }}</a></h2>
+            {% elif request.user.shop_assistant %}
+                <h2><a class="navbar-brand">Vendeur : {{ request.user.phone }}</a></h2>
+            {% endif %}
+        </div>
+
+        
+        <ul class="nav justify-content-end">
+
+            {% if not request.user.admin %}
+                <li class="nav-item rounded mx-1">
+                    <a href="{% url 'home' %}" class="nav-link btn text-dark rounded-pill menu">Accueil</a>
+                </li>
+                <li class="nav-item rounded mx-1">
+                    <a href="{% url 'wallet' %}" class="nav-link btn text-dark rounded-pill menu">Wallet</a>
+                </li>
+                <li class="nav-item rounded mx-1">
+                    <a href="{% url 'transfer' %}" class="nav-link btn text-dark rounded-pill menu">Transfert</a>
+                </li>
+            {% else %}
+                <li class="nav-item rounded mx-1">
+                    <a href="#" class="nav-link btn text-dark rounded-pill menu">Dashboard</a>
+                </li>
+            {% endif %}
+
+
+            <li class="nav-item rounded mx-1">
+                <a href="{% url 'activity' %}" class="nav-link btn text-dark rounded-pill menu">Activité</a>
+            </li>
+
+            {% if not request.user.client and not request.user.shop_assistant %}
+                <li class="nav-item rounded mx-1">
+                    <a href="{% url 'supply' %}" class="nav-link btn text-dark rounded-pill menu">Recharge</a>
+                </li>
+                {% if request.user.admin %}
+                    <li class="nav-item rounded ms-1 me-5">
+                        <a href="{% url 'account' %}" class="nav-link btn text-dark rounded-pill menu">Compte</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+
+            <li class="nav-item rounded ms-5">
+                <a href="{% url 'logout' %}" class="nav-link btn menu list-group-item-danger rounded-pill">Deconnexion</a>
+            </li>
+
+        </ul>
+
+    </div>
+    </nav>

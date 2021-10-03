@@ -1,0 +1,32 @@
+{% extends 'client/layouts/_base.html' %}
+
+
+{% block ntitle %}| Wallet{% endblock ntitle %}
+
+
+
+{% block ncontent %}
+
+    {% include 'client/layouts/_nav.html' %}
+
+    <div class="card-title text-center m-4">
+        <h1 class="text-secondary">Wallet</h1>
+    </div>
+
+    <div class="row px-5">
+        <div class="col-md-1 card card-body mx-5 text-center">
+            <div class="card-header">
+                <h4>CDF</h4>
+            </div>
+            <h1>{{ request.user.cdf_balance }}</h1>
+        </div>
+        <div class="col-md-1 card card-body mx-5 text-center">
+            <div class="card-header">
+                <h4>USD</h4>
+            </div>
+            <h1>{{ request.user.usd_balance }}</h1>
+        </div>
+    </div>
+
+
+{% endblock ncontent %}

@@ -1,0 +1,50 @@
+{% extends 'client/pages/transfer.html' %}
+
+
+
+{% block ntitle %} | Paiement Facture{% endblock ntitle %}
+
+
+{% block ntranscontent %}
+
+
+    <div class="card-title text-center m-4">
+        <h1 class="text-secondary">Paiement de facture</h1>
+    </div>
+
+    <div class="row">
+
+        <div class="card col-md-4 p-0">
+            <li class="list-group-item list-group-item-info" aria-current="true">Factures non payés</li>
+            <div class="d-flex flex-column bd-highlight p-0">
+
+                {% for bill in bills %}
+                <a href="{% url 'bill-detail' bill.id %}" class="nav-link d-flex bill menu bills" id="{{ bill.id }}">
+                    <div class="p-2 bd-highlight">
+                        <div class="d-flex">
+                            <h6>{{ bill.shop_assistant.name }}</h6>
+                            <small>{{ bill.bill_submit_date }}</small>
+                        </div>
+                        <small>{{ bill.bill_motif }}</small>
+                    </div>
+                    <div class="my-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                          </svg>
+                    </div>
+                </a>
+                <hr class="p-0 m-0">
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <div class="col-md-8">
+        {% block billDetailContent %}
+        {% endblock billDetailContent %}
+        </div>
+
+    </div>
+
+
+{% endblock ntranscontent %}

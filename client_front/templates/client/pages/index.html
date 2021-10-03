@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Kpay | Accueil</title>
+
+    <link rel="stylesheet" href="{% static 'client/style/t/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'client/style/t/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'client/style/t/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'client/style/t/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'client/style/t/style.css' %}">
+    <link rel="stylesheet" href="{% static 'client/style/t/responsive.css' %}">
+
+    <link rel="stylesheet" href="{% static 'client/style/main.css' %}">
+
+    <script src="https://kit.fontawesome.com/45f9208535.js" crossorigin="anonymous"></script>
+
+
+    <style>
+        .wrapper header.header {
+            background-image: url("{% static 'client/img/header-bg.jpg' %}");
+        }
+        .wrapper footer.footer {
+            background-image: url("{% static 'client/img/footer-bg.jpg' %}");
+        }
+
+        body {
+            animation: fadeInAnimation ease 3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+    </style>
+
+
+</head>
+ 
+<body>
+
+    <div class="wrapper">
+        <header class="header">
+            <div class="blue">
+                <img src="{{MEDIA_URL}}header-shepe-blue.png" alt="">
+            </div>
+            <div class="white">
+                <img src="{{MEDIA_URL}}header-shepe-white.png" alt="">
+            </div>
+            <div class="container">
+                <img class="shepe1" src="{{MEDIA_URL}}shepe1.png" alt="">
+                <img class="shepe2" src="{{MEDIA_URL}}shepe2.png" alt="">
+                <img class="shepe3" src="{{MEDIA_URL}}shepe2.png" alt="">
+                <img class="shepe4" src="{{MEDIA_URL}}shepe2.png" alt="">
+                <img class="shepe5" src="{{MEDIA_URL}}shepe1.png" alt="">
+                <img class="shepe6" src="{{MEDIA_URL}}shepe2.png" alt="">
+                
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="logo">
+                            <h2><a href="#">Kpayment</a></h2>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="menu">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#">À propos</a></li>
+                                <li><a href="#">Etapes</a></li>
+                                <li><a href="#">CCM</a></li>
+                                <li><a href="#">Equipe</a></li>
+                                <li><a href="#">Nous-contacter</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="header-text">
+                            <h1 class="main-title">Pour les personnes non bancarisées et sous-bancarisées</h1>
+                            <p class="slogan">Voici un moyen éfficance pour une meilleur usage et gestion de vos économie,<br> paiement de vos factures, démander de l'argent à vos proches et concerver dans votre portefeuille électronique</p>
+
+                            <a  href="{% url 'login' %}">
+                            Connexion
+                                {% comment %} <button class="main-btn"></button> {% endcomment %}
+                            </a>
+                            <a  href="{% url 'clientAccount' %}">
+                            Créer un compte
+                                {% comment %} <button class="main-btn"></button> {% endcomment %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="another-text">
+                            <h3>Trois étapes simples</h3>
+                            <p>Démarer avec Kpayment en suivant trois étapes très simple et facile <br>a metrisées </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="development">
+            <div class="blue">
+                <img src="{{MEDIA_URL}}development-shepe-blue.png" alt="">
+            </div>
+            <div class="white">
+                <img src="{{MEDIA_URL}}development-shepe-white.png" alt="">
+            </div>
+            <div class="container">
+                <div class="row ">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="design-development one">
+                            <i class="material-icons">Sur Kpayment</i>
+                            <h2>Créer un compte</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temp</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="design-development two">
+                            <i class="material-icons">Chez un Agent</i>
+                            <h2>Être recharger</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temp</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="design-development three">
+                            <i class="material-icons">À vos proches</i>
+                            <h2>Transferer de l'argent</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temp</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="works">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="work-images">
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/HZRp6iRjnhQ" frameborder="0" allowfullscreen></iframe>
+                            <div class="overlay-text">
+                                <i class="material-icons">lire_video</i>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="work-text-full">
+                            <div class="work-text">
+                                <h2>Comment ça marche?</h2>
+                                <p>C'est simple. Regardez la vidéo pour comprendre comment cela fonctionne.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- <section class="portfolia">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="port-text">
+                            <h2>Ce que nous avons fait récemment !</h2>
+                            <p>ILorem ipsum dolor sit amet, consectetur adipisicing elit, sed <br> do eiusmod </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="portfolio-part">
+                            <img src="{{MEDIA_URL}}portfolio-image1.jpg" alt="">
+                            <div class="overlay-slide">
+                                <h2>Aucun titre</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="portfolio-part">
+                            <img src="{{MEDIA_URL}}portfolio-image2.jpg" alt="">
+                            <div class="overlay-slide">
+                                <h2>Aucun titre</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="portfolio-part">
+                            <img src="{{MEDIA_URL}}portfolio-image3.jpg" alt="">
+                            <div class="overlay-slide">
+                                <h2>Aucun titre</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="portfolio-part">
+                            <img src="{{MEDIA_URL}}portfolio-image4.jpg" alt="">
+                            <div class="overlay-slide">
+                                <h2>Aucun titre</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="portfolio-part">
+                            <img src="{{MEDIA_URL}}portfolio-image5.jpg" alt="">
+                            <div class="overlay-slide">
+                                <h2>Aucun titre</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="portfolio-part">
+                            <img src="{{MEDIA_URL}}portfolio-image6.jpg" alt="">
+                            <div class="overlay-slide">
+                                <h2>Aucun titre</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="penination">
+                            <a href="#"><p>Plus de travaux</p></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+        <section class="our-team mt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="team-text">
+                            <h2>Notre équipe!</h2>
+                            <p>Meet Our Awesome Team. Lorem Ipsum dolor sit amet <br> Hola amigos como estas!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="my-claint owl-carousel owl-theme">
+                            <div class="item">
+                                <img src="{{MEDIA_URL}}team-member1.png" alt="">
+                                <!-- <div class="item-overlay"></div> -->
+                                <div class="item-text">
+                                    <h3>Kabbo Liate</h3>
+                                    <h4>UX/UI Designer</h4>
+                                    <p><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="{{MEDIA_URL}}team-member2.png" alt="">
+                                <div class="item-overlay"></div>
+                                <div class="item-text">
+                                    <h3>Kabbo Liate</h3>
+                                    <h4>UX/UI Designer</h4>
+                                    <p><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="{{MEDIA_URL}}team-member3.png" alt="">
+                                <div class="item-overlay"></div>
+                                <div class="item-text">
+                                    <h3>Kabbo Liate</h3>
+                                    <h4>UX/UI Designer</h4>
+                                    <p><a href="#"><i class="fi fi-facebook" aria-hidden="true"></i></a><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="{{MEDIA_URL}}team-member1.png" alt="">
+                                <div class="item-overlay"></div>
+                                <div class="item-text">
+                                    <h3>Kabbo Liate</h3>
+                                    <h4>UX/UI Designer</h4>
+                                    <p><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="contact">
+            <div class="blue">
+                <img src="{{MEDIA_URL}}contact-shepe-blue.png" alt="">
+            </div>
+            <div class="white">
+                <img src="{{MEDIA_URL}}contact-shepe-white.png" alt="">
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="contact-text">
+                            <h2>Nous contacter!</h2>
+                            <p>Rencontrez notre équipe géniale. Lorem Ipsum dolor sit amet Hola amigos como estas!</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-12">
+                        <div class="contact-form">
+                            <form action="#" method="post">
+                                <div class="first">
+                                    <input type="text" name="" placeholder="Nom">
+                                </div>
+                                <div class="last">
+                                    <input type="text" name="" placeholder="Prénom">
+                                </div>
+                                <div class="email">
+                                    <input type="email" name="" placeholder="Adresse mail">
+                                </div>
+                                <div class="message">
+                                    <textarea placeholder="Votre Message"></textarea>
+                                </div>
+                                <div class="checkbox-submit">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="" checked> Accepter le Newsletter</label>
+                                    </div>
+                                    <div class="submit">
+                                        <input type="submit" value="Envoyer">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="footer-icon">
+                            <h2>Kpayment</h2>
+                            <p><a href="#"><i aria-hidden="true" class="fa fa-facebook"></i></a><a href="#"><i aria-hidden="true" class="fa fa-linkedin"></i></a><a href="#"><i aria-hidden="true" class="fa fa-dribbble"></i></a><a href="#"><i aria-hidden="true" class="fa fa-behance"></i></a><a href="#"><i aria-hidden="true" class="fa fa-google-plus"></i></a></p>
+                            <h5>&copy; All Right Reserved. Kpayment 2021</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="footer-text">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6 col-xs-6">
+                                    <div class="footer-text-single">
+                                        <h3>À propos de nous</h3>
+                                        <p><a href="#">Notre équipe</a></p>
+                                        <p><a href="#">Société</a></p>
+                                        <p><a href="#">Jobs</a></p>
+                                        <p><a href="#">Newsletter</a></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-6">
+                                    <div class="footer-text-single">
+                                        <h3>Centre d'aide</h3>
+                                        <p><a href="#">Documentations</a></p>
+                                        <p><a href="#">Tutoriels</a></p>
+                                        <p><a href="#">Conditions d'utilisation</a></p>
+                                        <p><a href="#">Politique de confidentialité</a></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-6">
+                                    <div class="footer-text-single">
+                                        <h3>Outils</h3>
+                                        <p><a href="#">Créer un compte</a></p>
+                                        <p><a href="#">Connexion</a></p>
+                                        <p><a href="#">Services</a></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-6">
+                                    <div class="footer-text-single">
+                                        <h3>Entrer en contact</h3>
+                                        <p><a href="#">Nous-contacter</a></p>
+                                        <p><a href="#">Demander une démo</a></p>
+                                        <p><a href="#">+243 997 057 917</a></p>
+                                        <p><a href="#">nelsonkayisirirya5@gmail.com</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <script src="{% static 'client/js/t/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'client/js/t/bootstrap.min.js' %}"></script>
+    <script src="{% static 'client/js/t/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'client/js/t/active.js' %}"></script>
+
+
+</body>
+
+</html>

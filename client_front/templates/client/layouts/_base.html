@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% load static %}
+
+    {% load sass_tags %}
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Kpay {% block ntitle %}{% endblock ntitle %}</title>
+
+
+    <link rel="stylesheet" href="{% static 'client/style/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'client/style/main.css' %}">
+
+    <link href="{% sass_src 'client/style/scss.scss' %}" rel="stylesheet" type="text/css" />
+
+
+    <!-- Links for phone number country code -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+
+    <script src="{% static 'client/js/bootstrap.min.js' %}"></script>
+
+
+    <style>
+        body {
+            animation: fadeInAnimation ease 3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+
+
+</head>
+
+
+    {% block ncontent %}{% endblock ncontent %}
+
+
+    
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+    
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+    
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+    
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+
+    <!-- Script for phone number country code -->
+    <!-- <script>
+        const phoneInputField = document.querySelector("#validationCustom02");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script> -->
+
+
+</body>
+</html>

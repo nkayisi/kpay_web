@@ -1,0 +1,52 @@
+body {
+    background: #fbfbfb;
+}
+
+.main-menu {
+    margin-top: 14%;
+    margin-bottom: 18%;
+}
+
+.menu:hover {
+    color: #1ce !important;
+    border-left: 4px solid #1ce;
+    transition: .9s;
+}
+
+.menu-active {
+    color: #1ce !important;
+    border-left: 4px solid #1ce;
+}
+
+
+.submit:hover {
+    color: #1ce !important;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.363);
+    transition: 1.4s;
+}
+
+.main-title {
+    font-size: 40px !important;
+}
+
+
+.slogan {
+    font-size: 15px !important;
+}
+
+
+.bill {
+    color: grey !important;
+}
+
+.phone {
+    display: block !important;
+}
+
+
+
+
+
+
+
+

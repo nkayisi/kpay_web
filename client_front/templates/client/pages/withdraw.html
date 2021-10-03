@@ -1,0 +1,58 @@
+{% extends 'client/pages/transfer.html' %}
+
+
+
+
+{% block ntitle %} | Retrait{% endblock ntitle %}
+
+
+{% block ntranscontent %}
+
+
+    <div class="card-title text-center m-5 p-3">
+        {% if messages %}
+            <ul class="message p-0" style="list-style-type: none;">
+                {% for message in messages %}
+                    <li class="list-group-item-{{message.tags}}"
+                    style="font-size:14px; padding: 12px; text-align:center;">
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h1 class="text-secondary">Retrait de l'argent</h1>
+    </div>
+
+
+<form method='POST' class="row g-3 needs-validation w-50 mx-auto px-5" novalidate>
+    {% csrf_token %}
+    <div class="col-md-12">
+        <label for="validationCustom02" class="form-label" 
+            style="display: block;">Numéro du compte Agent</label>
+        <input type="tel" name="phone" class="form-control w-100 rounded-pill phone" id="validationCustom02"
+            pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="0997057917" required >
+        <div class="invalid-feedback">
+            Entrer un numéro valide.
+        </div>
+    </div>
+
+
+    <div class="col-md-12">
+        <label for="validationCustom01" class="form-label">Montant a retiré</label>
+        <input type="number" name="amount" class="form-control rounded-pill" id="validationCustom01" 
+                placeholder="Montant" required>
+        <div class="invalid-feedback">
+            Entrer un nombre valide pour déterminer le montant.
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 mt-5">
+        <button type="submit" class="btn rounded-pill list-group-item-info menu px-5">
+            Retirer maintenant
+        </button>
+    </div>
+
+</form>
+
+
+{% endblock ntranscontent %}

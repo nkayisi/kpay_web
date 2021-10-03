@@ -1,0 +1,137 @@
+{% extends 'client/layouts/_base.html' %}
+
+{% load static %}
+
+
+{% block ntitle %}| Compte{% endblock ntitle %}
+
+
+{% block ncontent %}
+
+
+{% include 'client/layouts/_nav.html' %}
+
+<div class="card-title text-center m-5">
+    <h1 class="text-secondary">Création d'un compte</h1>
+</div>
+{% comment %} <span class="input-group-text">.00</span> {% endcomment %}
+
+
+<form method="POST" class="row g-3 needs-validation w-50 mx-auto px-5" novalidate>
+    {% csrf_token %}
+
+    <div class="row mx-auto w-75 mb-4 pe-0">
+        <div class="col-md-12">
+            <div class="range">
+                <input type="range" min="1" max="3" name="status" steps="1" value="1">
+            </div>
+              
+            <ul class="range-labels">
+                <li class="active selected after">Agent</li>
+                <li>Vendeur</li>
+                <li class="before">Admin</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <label for="validationCustomUsername" class="form-label">Nom d'utilisateur</label>
+        <div class="input-group has-validation">
+            <!-- <span class="input-group-text" id="inputGroupPrepend">@</span> -->
+            <input type="text" name="username" class="form-control rounded-pill" 
+                    id="validationCustomUsername" aria-describedby="inputGroupPrepend"
+                    placeholder="nkayisi" required>
+            <div class="invalid-feedback">
+                Veillez choisir un nom d'utilisateur.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <label for="validationCustom02" class="form-label">Téléphone</label>
+        <input type="tel" name="phone" class="form-control rounded-pill" id="validationCustom02"
+            pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="0997057917" required>
+        <div class="invalid-feedback">
+            Entrer un numéro valide.
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <label for="validationCustom01" class="form-label">Mot de passe</label>
+        <input type="password" name="password" class="form-control rounded-pill" id="validationCustom01" 
+                placeholder="Mot de passe" required>
+        <div class="invalid-feedback">
+            Veillez entrer le mot de passe.
+        </div>
+    </div>
+
+
+
+    <div class="col-md-6">
+        <label for="validationCustom03" class="form-label">Confirmation</label>
+        <input type="password" name="passwordConfirm" class="form-control rounded-pill" id="validationCustom03"
+                placeholder="Confirmation du mot de passe" required>
+        <div class="invalid-feedback">
+            Mot de passe non valide.
+        </div>
+    </div>
+
+
+    <div class="d-grid gap-2 mt-5">
+        <button type="submit" class="btn rounded-pill list-group-item-info menu px-5">
+            Envoyer
+        </button>
+    </div>
+
+</form>
+
+<script src="{% static 'client/jquery.min.js' %}"></script>
+
+<script>
+    var sheet = document.createElement('style'),  $rangeInput = $('.range input'),
+        prefs = ['webkit-slider-runnable-track', 'moz-range-track', 'ms-track'];
+
+    document.body.appendChild(sheet);
+
+    var getTrackStyle = function (el) {  
+
+        var curVal = el.value,
+            val = (curVal - 1) * 48.666666667,
+            style = '';
+        
+        // Set active label
+        $('.range-labels li').removeClass('active selected');
+        
+        var curLabel = $('.range-labels').find('li:nth-child(' + curVal + ')');
+        
+        curLabel.addClass('active selected');
+        curLabel.prevAll().addClass('selected');
+        
+        // Change background gradient
+        for (var i = 0; i < prefs.length; i++) {
+            style += '.range {background: linear-gradient(to right, #37adbf 0%, #37adbf ' + val + '%, #fff ' + val + '%, #fff 100%)}';
+            style += '.range input::-' + prefs[i] + '{background: linear-gradient(to right, #37adbf 0%, #37adbf ' + val + '%, #b2b2b2 ' + val + '%, #b2b2b2 100%)}';
+        }
+
+        return style;
+    }
+
+    $rangeInput.on('input', function () {
+        sheet.textContent = getTrackStyle(this);
+    });
+
+    // Change input value on label click
+    $('.range-labels li').on('click', function () {
+        
+        var index = $(this).index();
+    
+        $rangeInput.val(index + 1).trigger('input');
+    
+    });
+
+</script>
+
+
+
+{% endblock ncontent %}
