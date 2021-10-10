@@ -8,6 +8,7 @@ django = "*"
 djangorestframework = "*"
 libsass = "*"
 django-sass-processor = "*"
+django-rest-knox = "*"
 
 [dev-packages]
 

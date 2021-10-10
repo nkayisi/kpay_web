@@ -11,7 +11,7 @@ from .clientModel import Client
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
-        fields = ('phone', 'password')
+        fields = ('name', 'phone', 'password')
         extra_kwargs = {'password': {'write_only': True}, }
 
     def create(self, validated_data):
@@ -23,22 +23,26 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Client
-        fields = ('id', 'phone', 'first_login' )
+        fields = ('id', 'name', 'phone', 'last_login' )
 
    
 
 
 class LoginUserSerializer(serializers.Serializer):
+
     phone = serializers.CharField()
     password = serializers.CharField(
         style={'input_type': 'password'}, trim_whitespace=False)
 
     def validate(self, attrs):
+
         phone = attrs.get('phone')
         password = attrs.get('password')
 
         if phone and password:
+
             if Client.objects.filter(phone=phone).exists():
+                
                 user = authenticate(request=self.context.get('request'),
                                     phone=phone, password=password)
                 print('Data User >>', user)

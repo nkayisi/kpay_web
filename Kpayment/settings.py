@@ -41,18 +41,21 @@ INSTALLED_APPS = [
     # Installed Apps
     'rest_framework',
     'sass_processor',
+    'knox',
 
 
     # My Apps
     'Kmodels.apps.KmodelsConfig',
     'client_front.apps.ClientFrontConfig',
+    'auth_api.apps.AuthApiConfig',
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -151,6 +154,17 @@ SASS_PROCESSOR_ROOT = STATIC_ROOT_SCSS
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Kmodels.Client'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+}
+
+from datetime import timedelta
+
+REST_KNOX = {
+    'USER_SERIALIZER': 'Kmodels.userSerializers.UserSerializer',
+    'TOKEN_TTL': timedelta(hours=24*7),
+}
 
 # LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
