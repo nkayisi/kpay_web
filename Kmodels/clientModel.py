@@ -12,7 +12,6 @@ from rest_framework.authtoken.models import Token
 
 import random 
 import os
-# import request
 
 
 class UserManager(BaseUserManager):
@@ -99,6 +98,7 @@ class Client(AbstractBaseUser):
     usd_balance = models.FloatField(default=0)
     cdf_balance = models.FloatField(default=0)
 
+
     is_staff = models.BooleanField(default=False)
 
     active =        models.BooleanField(default=False)
@@ -162,7 +162,6 @@ class PhoneOTP(models.Model):
     phone_regex = RegexValidator(regex=r'^(\+\d{1,3})?,?\s?\d{9,14}', message ="Phone number must be entered in the format: '+999999999'. Up to 14 digits allowed.")
     phone       = models.CharField(validators=[phone_regex], max_length=17, unique=True)
     otp         = models.CharField(max_length = 9, blank = True, null= True)
-    count       = models.IntegerField(default = 0, help_text = 'Number of otp sent')
     validated   = models.BooleanField(default= False, help_text='If it true, that means user have validate otp correctly in second API')
 
     def __str__(self):

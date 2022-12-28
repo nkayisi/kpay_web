@@ -23,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Client
-        fields = ('id', 'name', 'phone', 'last_login' )
+        fields = '__all__'
 
    
 

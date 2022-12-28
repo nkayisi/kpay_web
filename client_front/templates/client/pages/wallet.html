@@ -7,24 +7,45 @@
 
 {% block ncontent %}
 
-    {% include 'client/layouts/_nav.html' %}
+
+{% include 'client/layouts/_nav.html' %}
+
 
     <div class="card-title text-center m-4">
         <h1 class="text-secondary">Wallet</h1>
     </div>
 
-    <div class="row px-5">
-        <div class="col-md-1 card card-body mx-5 text-center">
-            <div class="card-header">
-                <h4>CDF</h4>
+    <h1 class="p-2 text-center" style="color: gray; font-size: 50px;">
+        {{request.user.phone}}
+    </h1>
+    <hr class="w-25 mx-auto mb-5" style="border: 3px solid #1ce;">
+
+    <div class="container mx-auto ">
+        <div class="row">
+
+        <div class="col-md-5 mx-5">
+            <div class="card">
+                <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">CDF</h5>
+                    <h1 class="mb-2 text-muted">{{cdf}}</h1>                 
+                </div>
+                </div>
             </div>
-            <h1>{{ request.user.cdf_balance }}</h1>
         </div>
-        <div class="col-md-1 card card-body mx-5 text-center">
-            <div class="card-header">
-                <h4>USD</h4>
+
+        <div class="col-md-5 mx-5">
+            <div class="card">
+                <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">USD</h5>
+                    <h1 class="mb-2 text-muted">{{usd}}</h1>                 
+                </div>
+                </div>
             </div>
-            <h1>{{ request.user.usd_balance }}</h1>
+        </div>
+
+        
         </div>
     </div>
 

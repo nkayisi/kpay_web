@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Reçu</title>
+  </head>
+  <body>
+    <header class="clearfix">
+      <div id="logo">
+        <img src="logo.png">
+      </div>
+      <h1 class="text-center">Reçu</h1>
+      <div id="company" class="clearfix">
+        <div>Acteur : {{transaction.sender.name}}</div>
+        <div>Phone : {{transaction.sender.phone}}</div>
+      </div>
+      <hr>
+      <div id="project">
+        <div><span>BENEFICIAIRE</span> : {{transaction.recever.name}}</div>
+        <div><span>PHONE</span> : {{transaction.sender.phone}}</div>
+        <div><span>DATE OPERATION</span> : {{transaction.trans_date}}</div>
+        <br>
+        <br>
+      </div>
+    </header>
+    <main>
+
+      <div id="project">
+        <div><span>TYPE D'OPERATION</span> : {{transaction.desc_type}}</div>
+        <div><span>MONTANT</span> : {{transaction.currency}} {{transaction.trans_amount}}</div>
+        <div><span>COUT</span> : {{transaction.currency}} {{transaction.trans_cost}}</div>
+        <br>
+        <br>
+      </div>
+
+          <hr>
+      <div id="notices">
+        <div>NB:</div>
+        <div class="notice">Des frais financiers de 1,5% seront prélevés sur les soldes impayés après 30 jours.</div>
+      </div>
+    </main>
+
+
+  </body>
+</html>

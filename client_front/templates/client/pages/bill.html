@@ -9,23 +9,46 @@
 
 
     <div class="card-title text-center m-4">
+        {% if messages %}
+            <ul class="message p-0" style="list-style-type: none;">
+                {% for message in messages %}
+                    <li class="list-group-item-{{message.tags}}"
+                    style="font-size:14px; padding: 12px; text-align:center;">
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <h1 class="text-secondary">Paiement de facture</h1>
     </div>
 
     <div class="row">
 
         <div class="card col-md-4 p-0">
-            <li class="list-group-item list-group-item-info" aria-current="true">Factures non payés</li>
+            <li class="list-group-item list-group-item-info" aria-current="true">Mes Factures</li>
             <div class="d-flex flex-column bd-highlight p-0">
 
                 {% for bill in bills %}
-                <a href="{% url 'bill-detail' bill.id %}" class="nav-link d-flex bill menu bills" id="{{ bill.id }}">
+                <a href="{% url 'bill-detail' bill.id %}" class="nav-link d-flex bill menu bills">
                     <div class="p-2 bd-highlight">
+
+                        <h6>{{ bill.shop_assistant.name }} </h6>
+
                         <div class="d-flex">
-                            <h6>{{ bill.shop_assistant.name }}</h6>
-                            <small>{{ bill.bill_submit_date }}</small>
+                            <small>{{ bill.bill_motif|truncatechars:22 }}</small>
+                            <div class="text-end ms-5">
+                                <small> {{ bill.bill_submit_date|date }}</small>
+                             </div>
                         </div>
-                        <small>{{ bill.bill_motif }}</small>
+
+                        <div>
+                            {% if bill.is_payed  %}
+                                <small class="text-success">Déjà payé</small>
+                            {% else %}
+                                <small class="text-danger">Non payé</small>
+                            {% endif %}
+                        </div>
+
                     </div>
                     <div class="my-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -39,7 +62,7 @@
             </div>
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-7 ms-5">
         {% block billDetailContent %}
         {% endblock billDetailContent %}
         </div>

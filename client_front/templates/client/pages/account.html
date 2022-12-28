@@ -9,15 +9,16 @@
 {% block ncontent %}
 
 
-{% include 'client/layouts/_nav.html' %}
+    {% include 'client/layouts/_nav.html' %}
+
 
 <div class="card-title text-center m-5">
-    <h1 class="text-secondary">Création d'un compte</h1>
+    <h1 class="text-secondary">Comptes</h1>
 </div>
 {% comment %} <span class="input-group-text">.00</span> {% endcomment %}
 
 
-<form method="POST" class="row g-3 needs-validation w-50 mx-auto px-5" novalidate>
+<form method="POST" class="row g-3 needs-validation w-50 mx-auto px-5 pt-5" novalidate>
     {% csrf_token %}
 
     <div class="row mx-auto w-75 mb-4 pe-0">
@@ -80,7 +81,7 @@
 
     <div class="d-grid gap-2 mt-5">
         <button type="submit" class="btn rounded-pill list-group-item-info menu px-5">
-            Envoyer
+            Crée un compte
         </button>
     </div>
 

@@ -2,7 +2,7 @@
 
 
 
-{% block ntitle %} | Création Comppte{% endblock ntitle %}
+{% block ntitle %} | Création Compte{% endblock ntitle %}
 
 
 
@@ -11,6 +11,16 @@
 {% block ncontent %}
 
 <div class="card-title text-center m-5 pt-5">
+    {% if messages %}
+            <ul class="message p-0" style="list-style-type: none;">
+                {% for message in messages %}
+                    <li class="list-group-item-{{message.tags}}"
+                    style="font-size:14px; padding: 12px; text-align:center;">
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     <h1 class="text-secondary">Création d'un compte</h1>
 </div>
 
@@ -58,16 +68,6 @@
             Mot de passe non valide.
         </div>
     </div>
-
-    {% if messages %}
-        <ul class="message p-0 px-5" style="list-style-type: none;">
-            {% for message in messages %}
-                <li class="text-danger" style="font-size:14px; text-align:center;">
-                    {{ message }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
 
 
     <div class="d-grid gap-2 text-center">

@@ -7,6 +7,7 @@
 
 {% block ncontent %}
 
+
     {% include 'client/layouts/_nav.html' %}
 
 
@@ -30,7 +31,7 @@
     {% csrf_token %}
 
     <div class="col-md-12">
-        <label for="validationCustom02" class="form-label">Identifiant du compte béneficiaire ou Téléphone</label>
+        <label for="validationCustom02" class="form-label">Béneficiaire</label>
         <input type="tel" name="phone" class="form-control rounded-pill" id="validationCustom02"
             pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="0997057917" required>
         <div class="invalid-feedback">
@@ -40,17 +41,33 @@
 
 
     <div class="col-md-12">
-        <label for="validationCustom01" class="form-label">Montant de recharge</label>
-        <input type="number" name="amount" class="form-control rounded-pill" id="validationCustom01" 
-                placeholder="Montant" required>
-        <div class="invalid-feedback">
-            Entrer un nombre valide pour déterminer le montant.
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <label for="inputState" class="form-label">Devise</label>
+                <select id="inputState" name="currency" class="form-select text-center rounded-pill">
+                <option selected>CDF</option>
+                <option>USD</option>
+                </select>
+            </div>
+
+            <div class="col-md-9">
+                <label for="validationCustom01" class="form-label">Montant de recharge</label>
+                <input type="number" name="amount" class="form-control rounded-pill" id="validationCustom01" 
+                        placeholder="Montant" required>
+                <div class="invalid-feedback">
+                    Entrer un nombre valide pour déterminer le montant.
+                </div>
+            </div>
+
         </div>
+
     </div>
 
     <div class="d-grid gap-2 mt-5">
         <button type="submit" class="btn rounded-pill list-group-item-info menu px-5">
-            Envoyer
+            Recharger
         </button>
     </div>
 

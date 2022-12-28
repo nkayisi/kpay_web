@@ -9,7 +9,7 @@
 {% block ntranscontent %}
 
 
-    <div class="card-title text-center m-5 p-3">
+    <div class="card-title text-center m-5 p-5">
         {% if messages %}
             <ul class="message p-0" style="list-style-type: none;">
                 {% for message in messages %}
@@ -20,7 +20,7 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <h1 class="text-secondary">Envoie de l'argent</h1>
+        <h1 class="text-secondary">Envoie d'argent</h1>
     </div>
 
 
@@ -39,11 +39,24 @@
 
 
     <div class="col-md-12">
-        <label for="validationCustom01" class="form-label">Montant a envoyé</label>
-        <input type="number" name="amount" class="form-control rounded-pill" id="validationCustom01" 
-                placeholder="Montant" required>
-        <div class="invalid-feedback">
-            Entrer un nombre valide pour déterminer le montant.
+        <div class="row">
+            <div class="col-md-3">
+                <label for="inputState" class="form-label">Devise</label>
+                <select id="inputState" name="currency" class="form-select text-center rounded-pill">
+                <option selected>CDF</option>
+                <option>USD</option>
+                </select>
+            </div>
+
+            <div class="col-md-9">
+                <label for="validationCustom01" class="form-label">Montant à envoyé</label>
+                <input type="number" name="amount" class="form-control rounded-pill" id="validationCustom01" 
+                        placeholder="Montant" required>
+                <div class="invalid-feedback">
+                    Entrer un nombre valide pour déterminer le montant.
+                </div>
+            </div>
+
         </div>
     </div>
 

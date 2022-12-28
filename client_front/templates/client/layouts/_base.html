@@ -14,6 +14,9 @@
 
     <link rel="stylesheet" href="{% static 'client/style/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'client/style/main.css' %}">
+    <link rel="stylesheet" href="{% static 'client/style/style.css' %}">
+
+    {% block style %}{% endblock style %}
 
     <link href="{% sass_src 'client/style/scss.scss' %}" rel="stylesheet" type="text/css" />
 
@@ -44,6 +47,15 @@
 
 
 </head>
+<body>
+
+    {% comment %} <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div> {% endcomment %}
 
 
     {% block ncontent %}{% endblock ncontent %}

@@ -9,6 +9,9 @@ djangorestframework = "*"
 libsass = "*"
 django-sass-processor = "*"
 django-rest-knox = "*"
+reportlab = "*"
+xhtml2pdf = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

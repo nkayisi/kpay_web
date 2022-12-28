@@ -13,7 +13,8 @@ class Transaction(models.Model):
 
     trans_date = models.DateTimeField(verbose_name="Date de transaction", auto_now_add=True)
     trans_amount = models.DecimalField(verbose_name="Montat de la transaction", max_digits=12, decimal_places=2)
-    trans_cost = models.DecimalField(verbose_name="Coût de la transaction", max_digits=5, decimal_places=2, default=0)
+    trans_cost = models.DecimalField(verbose_name="Coût de la transaction", max_digits=15, decimal_places=2, default=0)
+    currency = models.CharField(max_length=10)
 
     desc_type = models.CharField(verbose_name="Type ou description de la transaction", 
                 max_length=250, default="Envoie")
@@ -30,7 +31,7 @@ class Transaction(models.Model):
 
 class AgentSupply(Transaction):
 
-    benefit = models.DecimalField(verbose_name="Interêt de recharge", max_digits=5, decimal_places=2)
+    benefit = models.DecimalField(default=0, verbose_name="Interêt de recharge", max_digits=15, decimal_places=2)
 
     def __str__(self):
         return f"{super().trans_date}  -  {super().trans_amount}  -  {self.benefit}"
@@ -42,9 +43,10 @@ class Bill(models.Model):
 
     bill_amount = models.DecimalField(verbose_name="Montat de la facture", max_digits=12, 
                     decimal_places=2)
+    currency = models.CharField(max_length=50, verbose_name="Devise")
     bill_submit_date = models.DateTimeField(verbose_name="Date de livraison", auto_now_add=True)
     is_payed = models.BooleanField(verbose_name="La facture est payer", default=False)
-
+    service  = models.CharField(max_length=50)
     bill_motif = models.CharField(max_length=250, verbose_name="Description")
 
     shop_assistant = models.ForeignKey(Client, verbose_name="Délivreur de la facture", on_delete=models.CASCADE)

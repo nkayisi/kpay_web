@@ -7,13 +7,13 @@
 
 {% block ncontent %}
 
-{% include 'client/layouts/_nav.html' %}
 
+    {% include 'client/layouts/_nav.html' %}
 
 
     <main class="container">
 
-        <div class="row p-5 mx-auto">
+        <div class="row pt-5 pb-5 mx-auto">
             <div class="col-md-2">
                 <input type="date" class="form-control" name="date" id="startDate">  
                 <label for="startDate">Date début</label>
@@ -38,7 +38,51 @@
             </div>
         </div>
 
-        {% if activities %}
+        {% if transactions %}
+
+        <div class="row mx-2">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Toutes mes opérations</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table student-data-table m-t-20">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Acteur</th>
+                                        <th>Bénéficiaire</th>
+                                        <th>Monant</th>
+                                        <th>Coût</th>
+                                        <th>Date</th>
+                                        <th>Reçu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for transaction in transactions %}
+                                    <tr>
+                                        <td>{{transaction.desc_type}}</td>
+                                        <td>{{transaction.sender.name}} : {{transaction.sender}}</td>
+                                        <td>{{transaction.recever.name}} : {{transaction.recever}}</td>
+                                        <td>{{transaction.currency}} {{transaction.trans_amount}}</td>
+                                        <td>{{transaction.currency}} {{transaction.trans_cost}}</td>
+                                        <td>{{transaction.trans_date|date}}</td>
+                                        <td>
+                                            <a href="{% url 'pdf' transaction.id %}" class="btn btn-sm list-group-item-primary">Obtenir reçu</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {% else %}
         <div class="bg-light p-5 rounded">

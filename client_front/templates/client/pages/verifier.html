@@ -1,0 +1,46 @@
+{% extends 'client/layouts/_base.html' %}
+
+
+
+{% block ntitle %} | Création Compte{% endblock ntitle %}
+
+
+
+
+
+{% block ncontent %}
+
+
+<div class="card-title text-center m-5 pt-5 pb-5">
+    <h1 class="text-secondary">Verification</h1>
+</div>
+
+
+
+<form method="POST" class="row g-3 needs-validation w-50 mx-auto px-5" novalidate>
+    {% csrf_token %}
+
+    <div class="col-md-12 mb-5">
+        <label for="validationCustomUsername" class="form-label">Code de verification</label>
+        <div class="input-group has-validation">
+            <input type="number" name="code" class="form-control rounded-pill" 
+                    id="validationCustomUsername" aria-describedby="inputGroupPrepend"
+                    placeholder="9845" required>
+            <div class="invalid-feedback">
+                Veillez entrer le code de verification.
+            </div>
+        </div>
+    </div>
+
+
+    <div class="d-grid gap-2 text-center mt-5 w-75 mx-auto">
+        <button type="submit" class="btn rounded-pill list-group-item-info menu px-5">
+            Verifier
+        </button>
+    </div>
+
+</form>
+
+
+
+{% endblock ncontent %}

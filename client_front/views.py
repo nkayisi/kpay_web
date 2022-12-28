@@ -16,8 +16,38 @@ from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
 
+from datetime import date
+from decimal import *
 
 
+# for PDF
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import context, pisa
+
+
+def render_pdf_view(request, id):
+
+    transaction = get_object_or_404(main_models.Transaction, id=id)
+
+    template_path = 'client/layouts/invoice.html'
+    context = {'transaction': transaction}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="reçu-{transaction.trans_date}.pdf"'
+    # if display
+    # response['Content-Disposition'] = f'filename="reçu-{transaction.trans_date}.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 
 def index(request):
@@ -39,7 +69,7 @@ def loginView(request):
             if user is not None and user.is_active:
                 login(request, user)
                 if user.admin:
-                    return redirect('supply')
+                    return redirect('dashboard')
                 else:
                     return redirect('home')
             else:
@@ -101,20 +131,39 @@ def account(request):
 
 
 def wallet(request):
-    return render(request, "client/pages/wallet.html")
+
+    usd = Decimal(request.user.usd_balance)
+    cdf = Decimal(request.user.cdf_balance)
+
+    context = {
+        'usd': usd.quantize(Decimal('.01'), rounding=ROUND_HALF_UP),
+        'cdf': cdf.quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
+    }
+
+    return render(request, "client/pages/wallet.html", context)
 
 
 
 def nAccount(request):
 
     if request.method == 'POST':
+
         username = request.POST.get('username')
         phone = request.POST.get('phone')
         passsword = request.POST.get('password')
 
         if Client.objects.filter(phone=phone).exists():
-            messages.error(request, 'Cet numéro de téléphone est déjà identifierpo dans la plateforme ou pocede déjà un compte. Veillez en choisir un autre !')
+            messages.warning(request, 'Cet numéro de téléphone est déjà identifierpo dans la plateforme ou pocede déjà un compte. Veillez en choisir un autre !')
         else:
+
+            # return render(request, 'client/pages/verifier.html', {'user':{
+            #     'name': username,
+            #     'phone': phone,
+            #     'password': passsword,
+            #     'active': True,
+            #     'client': True
+            # }})
+
             user = clientModel.Client.objects.create_user(
                 name = username,
                 phone = phone,
@@ -131,14 +180,26 @@ def nAccount(request):
     return render(request, 'client/pages/normal-account.html')
 
 
+def verifier(request):
+
+    code = request.POST.get('code')
+    user = request.POST.get('user')
+
+    print(code, user)
+
+    return render(request, 'client/pages/verifier.html')
+
 
 @login_required
 def supply(request):
 
     if request.method == 'POST':
 
+        balance = False
+
         phone = request.POST.get('phone')
         amount = float(request.POST.get('amount'))
+        currency = request.POST.get('currency')
 
         if clientModel.Client.objects.filter(phone=phone).exists():
 
@@ -152,34 +213,66 @@ def supply(request):
 
                     main_models.AgentSupply.objects.create(
                         trans_amount = amount,
-                        benefit = benefit,
                         desc_type = "Recharge",
+                        benefit = benefit,
+                        currency = currency,
                         sender = request.user,
                         recever = recever
                     )
 
-                    recever.usd_balance += (amount+benefit)
-                    recever.save()
+                    if currency == 'USD':
+
+                        request.user.usd_balance += (amount+benefit)
+                        request.user.save()
+
+                        recever.usd_balance += (amount+benefit)
+                        recever.save()
+                    else:
+
+                        request.user.cdf_balance += (amount+benefit)
+                        request.user.save()
+
+                        recever.cdf_balance += (amount+benefit)
+                        recever.save()
 
                 else:
                     messages.warning(request, "Désolé, vous ne pouvez que recharger un compte  Agent!")
 
             elif request.user.agent and not recever.admin and not recever.shop_assistant:
 
-                if request.user.usd_balance >= amount:
+                if currency == 'USD':
+                    if request.user.usd_balance >= amount:
+                        balance = True
+                else:
+                    if request.user.cdf_balance >= amount:
+                        balance = True
+
+
+                if balance:
 
                     main_models.Transaction.objects.create(
                         trans_amount = amount,
                         desc_type = "Recharge",
+                        currency = currency,
                         sender = request.user,
                         recever = recever
                     )
 
-                    request.user.usd_balance -= amount
-                    request.user.save()
+                    if currency == 'USD':
 
-                    recever.usd_balance += amount
-                    recever.save()
+                        request.user.usd_balance -= amount
+                        request.user.save()
+
+                        recever.usd_balance += amount
+                        recever.save()
+                    else:
+                        request.user.cdf_balance -= amount
+                        request.user.save()
+
+                        recever.cdf_balance += amount
+                        recever.save()
+                    
+                    messages.success(request, "Votre recharge de " + str(amount) + currency + " vers l'identifiant " + phone + " a réussit") 
 
                 else:
                     messages.warning(request, "Votre solde est issufisant pour éffectué cette opération!")
@@ -206,34 +299,54 @@ def withdraw(request):
 
     if request.method == 'POST':
 
+        balance = False
+
         phone = request.POST.get('phone')
         amount = float(request.POST.get('amount'))
+        currency= request.POST.get('currency')
 
         if clientModel.Client.objects.filter(phone=phone).exists():
 
             recever = clientModel.Client.objects.get(phone=phone)
             
             if recever.agent:
-                
+
                 trans_cost = amount*0.06
 
-                if request.user.usd_balance >= (amount+trans_cost):
+                if currency == 'USD':
+                    if request.user.usd_balance >= (amount+trans_cost):
+                        balance = True
+                else:
+                    if request.user.cdf_balance >= (amount+trans_cost):
+                        balance = True
+                
+
+                if balance:
 
                     main_models.Transaction.objects.create(
                         trans_amount = amount,
                         trans_cost = trans_cost,
+                        currency = currency,
                         desc_type = "Retrait",
                         sender = request.user,
                         recever = recever
                     )
 
-                    request.user.usd_balance -= (amount+trans_cost)
-                    request.user.save()
 
-                    recever.usd_balance += amount
-                    recever.save()  
+                    if currency == 'USD':
+                        request.user.usd_balance -= (amount+trans_cost)
+                        request.user.save()
 
-                    messages.success(request, "Votre retrait de " + str(amount) + " USD chez l'Agent " + phone + " a réussit") 
+                        recever.usd_balance += amount
+                        recever.save()  
+                    else:
+                        request.user.cdf_balance -= (amount+trans_cost)
+                        request.user.save()
+
+                        recever.cdf_balance += amount
+                        recever.save() 
+
+                    messages.success(request, "Votre retrait de " + str(amount) + currency + " chez l'Agent " + phone + " a réussit") 
 
                 else:
                     messages.warning(request, "Désolé votre solde est issufisant pour pour éffectué cette opération!")
@@ -252,29 +365,53 @@ def send(request):
 
     if request.method == 'POST':
 
+        balance = False
+
         phone = request.POST.get('phone')
         amount = float(request.POST.get('amount'))
+        currency = request.POST.get('currency')
 
         if clientModel.Client.objects.filter(phone=phone).exists():
 
-            trans_cost = amount*0.05
+            if currency == 'USD':
+                if request.user.usd_balance >= amount:
+                    balance = True
+            else:
+                if request.user.cdf_balance >= amount:
+                    balance = True
 
-            recever = clientModel.Client.objects.get(phone=phone)
-            
-            main_models.Transaction.objects.create(
-                trans_amount = amount,
-                trans_cost = trans_cost,
-                sender = request.user,
-                recever = recever
-            )
+            if balance:
 
-            request.user.usd_balance -= (amount+trans_cost)
-            request.user.save()
+                trans_cost = amount*0.05
 
-            recever.usd_balance += amount
-            recever.save()  
+                recever = clientModel.Client.objects.get(phone=phone)
+                
+                main_models.Transaction.objects.create(
+                    trans_amount = amount,
+                    trans_cost = trans_cost,
+                    currency = currency,
+                    sender = request.user,
+                    recever = recever
+                )
 
-            messages.success(request, "Votre transfert de " + str(amount) + " USD vers l'identifiant " + phone + " a réussit") 
+                if currency == 'USD':
+
+                    request.user.usd_balance -= (amount+trans_cost)
+                    request.user.save()
+
+                    recever.usd_balance += amount
+                    recever.save()  
+                else:
+                    request.user.cdf_balance -= (amount+trans_cost)
+                    request.user.save()
+
+                    recever.cdf_balance += amount
+                    recever.save() 
+
+                messages.success(request, "Votre transfert de " + str(amount) + currency + " vers l'identifiant " + phone + " a réussit") 
+
+            else:
+                messages.warning(request, "Votre solde est insufisant pour éffectué cette opération!") 
 
         else:
             messages.warning(request, "Compte introuvable pour l'identifiant "+ phone)          
@@ -285,7 +422,7 @@ def send(request):
 @login_required
 def bill(request):
 
-    bills = main_models.Bill.objects.filter(recipient=request.user, is_payed=False)
+    bills = main_models.Bill.objects.filter(recipient=request.user)
 
 
     context = {
@@ -304,6 +441,7 @@ def billSubmit(request):
         phone = request.POST.get('phone')
         amount = float(request.POST.get('amount'))
         motif = request.POST.get('motif')
+        currency = request.POST.get('currency')
 
         if clientModel.Client.objects.filter(phone=phone).exists():
 
@@ -312,6 +450,7 @@ def billSubmit(request):
             main_models.Bill.objects.create(
                 bill_amount = amount,
                 bill_motif = motif,
+                currency = currency,
                 shop_assistant = request.user,
                 recipient = recever
             )
@@ -327,9 +466,9 @@ def billSubmit(request):
 @login_required
 def billDetail(request, id):
 
-    bills = main_models.Bill.objects.filter(recipient=request.user, is_payed=False)
+    bills = main_models.Bill.objects.filter(recipient=request.user)
 
-    bill = main_models.Bill.objects.get(id=id)
+    bill = get_object_or_404(main_models.Bill, id=id)
 
     context = {
         'bill': bill,
@@ -339,7 +478,98 @@ def billDetail(request, id):
     return render(request, 'client/pages/bill-detail.html', context)
 
 
+@login_required
+def billPay(request, id):
+
+    balance = False
+    today = date.today()
+
+    bills = main_models.Bill.objects.filter(recipient=request.user)
+
+    bill = get_object_or_404(main_models.Bill, id=id)
+
+    if bill.currency == 'USD':
+        if request.user.usd_balance >= bill.bill_amount:
+            balance = True
+    else:
+        if request.user.cdf_balance >= bill.bill_amount:
+            balance = True
+
+    if balance:
+
+        amount = float(bill.bill_amount)
+
+        trans = main_models.Transaction.objects.create(
+            trans_amount = amount,
+            desc_type = "Paiement facture",
+            currency = bill.currency,
+            sender = request.user,
+            recever = bill.shop_assistant
+        )
+
+        if bill.currency == 'USD':
+
+            request.user.usd_balance -= amount
+            request.user.save()
+
+            bill.shop_assistant.usd_balance += amount
+            bill.shop_assistant.save()
+        else:
+            request.user.cdf_balance -= amount
+            request.user.save()
+
+            bill.shop_assistant.cdf_balance += amount
+            bill.shop_assistant.save()
+
+
+        bill.is_payed = True
+        bill.transation = trans
+        bill.bill_payed_date = today
+        bill.save()
+
+        # messages.success(request, "Votre paiement de facture pour le montant de " + str(amount) + bill.currency + " vers l'identifiant " + bill.shop_assistant + " a réussit") 
+    # else:
+        # messages.warning(request, "Votre paiement de facture pour le montant de " + str(bill.bill_amount) + bill.currency + " vers l'identifiant " + bill.shop_assistant + " a échoué, cause d'insuffisance de solde !")
+
+    context = {
+        'bill': bill,
+        'bills': bills
+    }
+
+    return render(request, 'client/pages/bill-detail.html', context)
+
 
 @login_required
 def activity(request):
-    return render(request, 'client/pages/activity.html')
+
+    transactions = main_models.Transaction.objects.filter(sender=request.user)
+
+    context={
+        'transactions': transactions
+    }
+
+    return render(request, 'client/pages/activity.html', context)
+
+
+
+@login_required
+def dashboard(request):
+
+    transactions = main_models.Transaction.objects.all()
+
+    users = clientModel.Client.objects.all()
+
+    admins = users.filter(admin=True)
+    agents = users.filter(agent=True)
+    shop_assistants = users.filter(shop_assistant=True)
+    clients = users.filter(client=True)
+
+    context = {
+        'admins': admins,
+        'agents': agents,
+        'assistants': shop_assistants,
+        'clients': clients,
+        'transactions': transactions
+    }
+
+    return render(request, 'client/pages/dashboard.html', context)

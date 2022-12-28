@@ -11,7 +11,7 @@ router = DefaultRouter()
 router.register('client', ClientApiView, basename='client')
 router.register('transaction', TransactionApiView, basename='transaction')
 router.register('agent-supply', AgentSupplyApiView, basename='agent-supply')
-router.register('bill', BillApiView, basename='bill')
+router.register('bill', BillApiView, basename='bills')
 router.register('phone-otp', PhoneOTPApiView, basename='phone-otp')
 
 

@@ -1,9 +1,65 @@
 {% extends 'client/pages/bill.html' %}
 
+{% load static %}
 
+{% block style %}
+    <link rel="stylesheet" href="{% static 'client/style/bill.css' %}" media="all" />
+{% endblock style %}
 
 {% block billDetailContent %}
 
-<h6>{{bill.shop_assistant.name}}</h6>
+    <header class="clearfix">
+        <hr>
+      <h3 class="text-center">Facture - {{ bill.id}}</h3>
+      <div id="company" class="clearfix">
+        <div>{{ bill.shop_assistant.name}}</div>
+        <div>{{ bill.shop_assistant.phone}}</div>
+      </div>
+      <div id="project">
+        <div><span>CLIENT</span> {{ bill.recipient.name}}</div>
+        <div><span>PHONE</span> {{ bill.recipient.phone}}</div>
+        <div><span>DATE</span> {{ bill.bill_submit_date}}</div>
+        <div><span>PAIEMENT</span> {{ bill.bill_payed_date}}</div>
+      </div>
+    </header>
+    <hr>
+    <main class="mt-2">
+      <table>
+        <thead>
+          <tr>
+            <th class="service">SERVICE</th>
+            <th class="desc">DESCRIPTION</th>
+            <th>PRIX</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="service">{{bill.service}}</td>
+            <td class="desc">{{bill.bill_motif}}</td>
+            <td class="unit">{{bill.currency}} {{bill.bill_amount}}</td>
+          </tr>
+          <tr>
+            <td colspan="2" class="grand total">TOTAL</td>
+            <td class="grand total">{{bill.currency}} {{bill.bill_amount}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+        
+        {% if bill.is_payed %}
+            <div class="list-group-item-success text-center p-2">
+                Facture dèjà payée
+            </div>
+        {% else %}
+            <div class="list-group-item-dark text-end p-2">
+                <a href="{% url 'bill-pay' bill.id %}" class="btn list-group-item-success">Payer la facture</a>
+            </div>
+        {% endif %}
+
+      <div id="notices">
+        <div>NB:</div>
+        <div class="notice">Des frais financiers de 1,5% seront prélevés sur les soldes impayés après 30 jours.</div>
+      </div>
+    </main>
 
 {% endblock billDetailContent %}
